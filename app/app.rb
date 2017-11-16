@@ -13,6 +13,7 @@ end
 
 get '/links' do
   @links = Link.all
+  p @links.tags
   erb(:links)
 end
 
@@ -20,10 +21,12 @@ get '/links/new' do
   erb(:new)
 end
 
-post '/links' do
+post '/add_links' do
   new_link = Link.new(url: params[:url], title: params[:title])
   new_tag = Tag.new(name: params[:tag])
   new_link.tags << new_tag
+
+
   new_link.save
   redirect '/links'
 end
